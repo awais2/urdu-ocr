@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: urdu-ocr
+    runtime: python
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: DATABASE_PATH
+        value: data/urdu_ocr.db
+      - key: CORS_ORIGINS
+        value: https://urdu-ocr.onrender.com
